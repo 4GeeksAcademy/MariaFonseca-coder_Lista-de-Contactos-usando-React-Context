@@ -15,7 +15,6 @@ export const Card = () => {
                     <div className="card mb-3" style={{ maxWidth: "540px" }} key={index}>
                         <div className="row g-0">
                             <div className="col-md-4">
-                                {/* Puedes reemplazar la URL de la imagen si tienes una */}
                                 <img src="https://via.placeholder.com/150" className="img-fluid rounded-start" alt="Contacto" />
                             </div>
                             <div className="col-md-8">
