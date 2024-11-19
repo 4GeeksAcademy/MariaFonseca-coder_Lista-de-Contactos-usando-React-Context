@@ -45,6 +45,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al agregar el contacto:", error);
                 }
             },
+            putContact: async (updatedContact) => {
+                try {
+                    const res = await fetch(`https://playground.4geeks.com/contact/agendas/MariaFonseca/contacts/${updatedContact.id}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedContact),
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        setStore((prevStore) => ({
+                            contacts: prevStore.contacts.map((contact) =>
+                                contact.id === updatedContact.id ? data.contact : contact
+                            ),
+                        }));
+                    }
+                } catch (error) {
+                    console.error("Error al actualizar el contacto:", error);
+                }
+            },
         }
     };
 };

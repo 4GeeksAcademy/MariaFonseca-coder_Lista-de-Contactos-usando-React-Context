@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 export const Card = () => {
     const { store, actions } = useContext(Context);
@@ -31,9 +32,11 @@ export const Card = () => {
                                     <p className="card-text">Dirección: {contact.address}</p>
                                 </div>
                                 <div className="position-absolute top-0 end-0 p-2">
-                                    <button className="btn btn-outline-primary me-2">
-                                        <i className="fa-regular fa-pen-to-square"></i>
-                                    </button>
+                                    <Link to="/editContact">
+                                        <button className="btn btn-outline-primary me-2">
+                                            <i className="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                    </Link>
                                     <button className="btn btn-outline-danger">
                                         <i className="fa-regular fa-trash-can"></i>
                                     </button>
