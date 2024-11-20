@@ -11,7 +11,6 @@ export const CreateContact = () => {
         address: ""
     });
 
-    // Función para manejar los cambios en los campos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewContact((prevContact) => ({
@@ -20,16 +19,15 @@ export const CreateContact = () => {
         }));
     };
 
-    // Manejo del envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.postContact(newContact);  // Enviar el nuevo contacto a la API
+        actions.postContact(newContact);
         setNewContact({
             name: "",
             email: "",
             phone: "",
             address: ""
-        });  // Limpiar el formulario después de enviarlo
+        });
     };
 
     return (

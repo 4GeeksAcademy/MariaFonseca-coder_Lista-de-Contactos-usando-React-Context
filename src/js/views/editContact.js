@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export const EditContact = () => {
     const { store, actions } = useContext(Context);
-    const { id } = useParams(); // Obtener el ID del contacto desde la URL
+    const { id } = useParams();
     const navigate = useNavigate();
     const [contact, setContact] = useState(null);
 
@@ -22,7 +22,7 @@ export const EditContact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await actions.putContact(contact);
-        navigate("/"); // Redirigir después de actualizar
+        navigate("/"); //Redirigir después de actualizar
     };
 
     if (!contact) {

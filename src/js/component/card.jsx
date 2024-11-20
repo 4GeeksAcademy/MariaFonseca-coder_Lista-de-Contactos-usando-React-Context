@@ -1,75 +1,73 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const Card = () => {
     const { store, actions } = useContext(Context);
-    const [showModal, setShowModal] = useState(false);
-    const [contactIdToDelete, setContactIdToDelete] = useState(null);
 
-    // Obtener los contactos cuando el componente se monta
+    //Obtener contactos cuando el componente se monta
     useEffect(() => {
         actions.getContacts();
     }, [actions]);
 
-    // Función para manejar la confirmación de eliminación
-    const handleDeleteClick = (id) => {
-        setContactIdToDelete(id);  // Guardamos el id del contacto a eliminar
-        setShowModal(true);        // Mostramos el modal de confirmación
+    const handleDelete = (contactId) => {
+        actions.deleteContact(contactId);  //Elimina el contacto desde el store
     };
-
-    const confirmDelete = () => {
-        if (contactIdToDelete) {
-            actions.deleteContact(contactIdToDelete);  // Llamamos a la acción para eliminar el contacto
-        }
-        setShowModal(false);  // Cerramos el modal
-    };
-
-    const cancelDelete = () => {
-        setShowModal(false);  // Si se cancela, solo cerramos el modal
-    };
-
-    // Mostrar el modal de confirmación
-    const renderModal = () => (
-        <div className="modal" style={{ display: showModal ? "block" : "none" }}>
-            <div className="modal-content">
-                <p>¿Estás seguro de que deseas eliminar este contacto?</p>
-                <button onClick={confirmDelete}>Sí, eliminar</button>
-                <button onClick={cancelDelete}>Cancelar</button>
-            </div>
-        </div>
-    );
 
     return (
         <div>
-            {store.contacts && store.contacts.length > 0 ? (
-                store.contacts.map((contact, index) => (
-                    <div className="card mb-1" style={{ width: "1000px", height: "200px", margin: "auto" }} key={index}>
+            {store.contacts.length > 0 ? (
+                store.contacts.map((contact) => (
+                    <div className="card mb-1" key={contact.id} style={{ width: "1000px", margin: "auto", position: "relative" }}>
                         <div className="row">
                             <div className="col-md-4">
                                 <img
-                                    src={`https://picsum.photos/300/188?random=${index + 1}`}
+                                    src={`https://picsum.photos/300/188?random=${contact.id}`}
                                     className="img-fluid rounded-start"
                                     alt="Contacto"
                                     style={{ width: "100%", objectFit: "cover" }}
                                 />
                             </div>
                             <div className="col-md-8">
-                                <div className="card-body text-start">
+                                <div className="card-body">
                                     <h5 className="card-title">{contact.name}</h5>
-                                    <p className="card-text">Email: {contact.email}</p>
-                                    <p className="card-text">Teléfono: {contact.phone}</p>
-                                    <p className="card-text">Dirección: {contact.address}</p>
+                                    <p className="card-text">{contact.email}</p>
+                                    <p className="card-text">{contact.phone}</p>
+                                    <p className="card-text">{contact.address}</p>
                                 </div>
-                                <div className="position-absolute top-0 end-0 p-2">
-                                    <Link to={`/editContact/${contact.id}`}>
-                                        <button className="btn btn-outline-primary me-2">
-                                            <i className="fa-regular fa-pen-to-square"></i>
-                                        </button>
+                                <div className="position-absolute top-0 end-0 p-3">
+                                    <Link to={`/editContact/${contact.id}`} className="btn btn-outline-primary me-2">
+                                        <i className="fa-regular fa-pen-to-square"></i>
                                     </Link>
-                                    <button className="btn btn-outline-danger" onClick={() => handleDeleteClick(contact.id)}>
+                                    <button
+                                        className="btn btn-outline-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target={`#deleteModal${contact.id}`}>
                                         <i className="fa-regular fa-trash-can"></i>
                                     </button>
+                                    <div className="modal fade" id={`deleteModal${contact.id}`} tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div className="modal-dialog">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title" id="deleteModalLabel">Eliminar Contacto</h5>
+                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    ¿Estás seguro de que deseas eliminar a {contact.name}?
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger"
+                                                        onClick={() => handleDelete(contact.id)}
+                                                        data-bs-dismiss="modal">
+                                                        Sí, eliminar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -78,8 +76,6 @@ export const Card = () => {
             ) : (
                 <p>No hay contactos disponibles.</p>
             )}
-
-            {renderModal()}  {/* Modal de confirmación */}
         </div>
     );
 };

@@ -1,26 +1,23 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            contacts: [],  // Inicialmente no hay contactos
+            contacts: [],  //Inicialmente en 0 contactos
         },
         actions: {
-            // Obtener los contactos desde la API
             getContacts: async () => {
                 try {
                     const res = await fetch("https://playground.4geeks.com/contact/agendas/MariaFonseca");
                     if (res.ok) {
                         const data = await res.json();
-                        setStore({ contacts: data.contacts });  // Guardamos los contactos obtenidos en el store
+                        setStore({ contacts: data.contacts });
                     }
                 } catch (error) {
                     console.error("Error al obtener los contactos:", error);
                 }
             },
 
-            // Agregar un nuevo contacto a la API
             postContact: async (newContact) => {
                 try {
-                    // Realizar la solicitud POST para agregar el nuevo contacto
                     const res = await fetch("https://playground.4geeks.com/contact/agendas/MariaFonseca/contacts", {
                         method: "POST",
                         headers: {
@@ -28,15 +25,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(newContact),
                     });
-
-                    // Si la respuesta es exitosa, procesamos la respuesta
                     if (res.ok) {
                         const data = await res.json();
                         console.log("Contacto agregado:", data);
 
-                        // Actualizamos el store con el nuevo contacto
                         setStore((prevStore) => ({
-                            contacts: [...prevStore.contacts, data.contact]  // Agregar el nuevo contacto a la lista
+                            contacts: [...prevStore.contacts, data.contact]  //Agregar el nuevo contacto a la lista
                         }));
                     } else {
                         console.error("Error al agregar el contacto:", res.statusText);
@@ -69,17 +63,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al actualizar el contacto:", error);
                 }
             },
-            deleteContact: async (id) => {
+
+            deleteContact: async (contactId) => {
                 try {
-                    const res = await fetch(`https://playground.4geeks.com/contact/agendas/MariaFonseca/contacts/${id}`, {
-                        method: "DELETE",  // Usamos DELETE para eliminar el contacto
+                    const res = await fetch(`https://playground.4geeks.com/contact/agendas/MariaFonseca/contacts/${contactId}`, {
+                        method: "DELETE",
                     });
 
                     if (res.ok) {
-                        // Si la eliminación es exitosa, actualizamos el store
                         setStore((prevStore) => ({
-                            contacts: prevStore.contacts.filter(contact => contact.id !== id)  // Filtramos el contacto eliminado
+                            contacts: prevStore.contacts.filter((contact) => contact.id !== contactId),
                         }));
+                        console.log(`Contacto con ID ${contactId} eliminado.`);
                     } else {
                         console.error("Error al eliminar el contacto:", res.statusText);
                     }
@@ -87,6 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al eliminar el contacto:", error);
                 }
             },
+
         }
     };
 };
