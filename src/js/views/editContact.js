@@ -30,7 +30,7 @@ export const EditContact = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
             <h2 className="mt-4">Editar Contacto</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
@@ -42,9 +42,8 @@ export const EditContact = () => {
                         onChange={handleChange}
                         placeholder="Full Name"
                     />
-                    <label>Nombre Completo</label>
+                    <label>Full Name</label>
                 </div>
-
                 <div className="form-floating mb-3">
                     <input
                         type="email"

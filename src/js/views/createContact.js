@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const CreateContact = () => {
     const { actions } = useContext(Context);
+    const navigate = useNavigate();
 
     const [newContact, setNewContact] = useState({
         name: "",
@@ -19,19 +21,21 @@ export const CreateContact = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        actions.postContact(newContact);
+        await actions.postContact(newContact);
         setNewContact({
             name: "",
             email: "",
             phone: "",
             address: ""
         });
+        navigate("/"); //Redirigir después de agregar el contacto
     };
 
     return (
-        <div>
+        <div className="container" style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
+            <h2 className="mt-4">Agregar Nuevo Contacto</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
                     <input
