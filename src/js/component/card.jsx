@@ -11,7 +11,7 @@ export const Card = () => {
     }, [actions]);
 
     const handleDelete = (contactId) => {
-        actions.deleteContact(contactId);  //Elimina el contacto desde el store
+        actions.deleteContact(contactId); //Elimina el contacto desde el store
     };
 
     return (

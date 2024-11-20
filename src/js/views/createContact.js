@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const CreateContact = () => {
     const { actions } = useContext(Context);
@@ -89,6 +90,10 @@ export const CreateContact = () => {
                     Create Contact
                 </button>
             </form>
+            <Link to={`/`} className="btn btn-outline-primary me-2 mt-2 bg-primary text-white">
+                <i className="fa-solid fa-circle-arrow-left"></i>
+                <span className="text-capitalize fs-7"> Go to contact list</span>
+            </Link>
         </div>
     );
 };
