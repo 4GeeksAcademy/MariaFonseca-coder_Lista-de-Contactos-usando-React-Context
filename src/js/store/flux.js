@@ -62,6 +62,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 contact.id === updatedContact.id ? data.contact : contact
                             ),
                         }));
+                    } else {
+                        console.error("Error al actualizar el contacto:", res.statusText);
                     }
                 } catch (error) {
                     console.error("Error al actualizar el contacto:", error);

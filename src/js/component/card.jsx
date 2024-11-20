@@ -32,7 +32,7 @@ export const Card = () => {
                                     <p className="card-text">Dirección: {contact.address}</p>
                                 </div>
                                 <div className="position-absolute top-0 end-0 p-2">
-                                    <Link to="/editContact">
+                                    <Link to={`/editContact/${contact.id}`}>
                                         <button className="btn btn-outline-primary me-2">
                                             <i className="fa-regular fa-pen-to-square"></i>
                                         </button>

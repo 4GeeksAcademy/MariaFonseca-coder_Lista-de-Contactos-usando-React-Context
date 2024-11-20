@@ -4,55 +4,45 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export const EditContact = () => {
     const { store, actions } = useContext(Context);
-    const { id } = useParams();  // Obtén el id de la URL usando useParams
-    const [contact, setContact] = useState({
-        id: "",
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-    });
-
-    // Hook para redirigir después de la actualización
+    const { id } = useParams(); // Obtener el ID del contacto desde la URL
     const navigate = useNavigate();
+    const [contact, setContact] = useState(null);
 
     useEffect(() => {
-        // Buscar el contacto que deseas editar
-        const contactToEdit = store.contacts.find(c => c.id === parseInt(id));  // Usa el id obtenido desde useParams
+        const contactToEdit = store.contacts.find((c) => c.id === parseInt(id));
         if (contactToEdit) {
-            setContact(contactToEdit);  // Setea los datos en el estado local
+            setContact(contactToEdit);
         }
     }, [store.contacts, id]);
 
     const handleChange = (e) => {
-        setContact({
-            ...contact,
-            [e.target.name]: e.target.value,
-        });
+        setContact({ ...contact, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Actualiza el contacto en la API
         await actions.putContact(contact);
-        // Redirige al listado de contactos (puedes ajustar la URL según tu necesidad)
-        navigate("/contacts");
+        navigate("/"); // Redirigir después de actualizar
     };
 
+    if (!contact) {
+        return <p>Cargando datos...</p>;
+    }
+
     return (
-        <div>
-            <h2>Edit Contact</h2>
+        <div className="container">
+            <h2 className="mt-4">Editar Contacto</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
                     <input
                         type="text"
                         className="form-control"
                         name="name"
-                        value={contact.name}
+                        value={contact.name || ""}
                         onChange={handleChange}
                         placeholder="Full Name"
                     />
-                    <label>Full Name</label>
+                    <label>Nombre Completo</label>
                 </div>
 
                 <div className="form-floating mb-3">
@@ -60,7 +50,7 @@ export const EditContact = () => {
                         type="email"
                         className="form-control"
                         name="email"
-                        value={contact.email}
+                        value={contact.email || ""}
                         onChange={handleChange}
                         placeholder="Email"
                     />
@@ -72,11 +62,11 @@ export const EditContact = () => {
                         type="text"
                         className="form-control"
                         name="phone"
-                        value={contact.phone}
+                        value={contact.phone || ""}
                         onChange={handleChange}
                         placeholder="Phone number"
                     />
-                    <label>Phone</label>
+                    <label>Teléfono</label>
                 </div>
 
                 <div className="form-floating mb-3">
@@ -84,15 +74,15 @@ export const EditContact = () => {
                         type="text"
                         className="form-control"
                         name="address"
-                        value={contact.address}
+                        value={contact.address || ""}
                         onChange={handleChange}
                         placeholder="Address"
                     />
-                    <label>Address</label>
+                    <label>Dirección</label>
                 </div>
 
                 <button type="submit" className="btn btn-primary">
-                    Update Contact
+                    Guardar Cambios
                 </button>
             </form>
         </div>
