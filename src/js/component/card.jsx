@@ -1,14 +1,44 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const Card = () => {
     const { store, actions } = useContext(Context);
+    const [showModal, setShowModal] = useState(false);
+    const [contactIdToDelete, setContactIdToDelete] = useState(null);
 
     // Obtener los contactos cuando el componente se monta
     useEffect(() => {
         actions.getContacts();
-    }, []);
+    }, [actions]);
+
+    // Función para manejar la confirmación de eliminación
+    const handleDeleteClick = (id) => {
+        setContactIdToDelete(id);  // Guardamos el id del contacto a eliminar
+        setShowModal(true);        // Mostramos el modal de confirmación
+    };
+
+    const confirmDelete = () => {
+        if (contactIdToDelete) {
+            actions.deleteContact(contactIdToDelete);  // Llamamos a la acción para eliminar el contacto
+        }
+        setShowModal(false);  // Cerramos el modal
+    };
+
+    const cancelDelete = () => {
+        setShowModal(false);  // Si se cancela, solo cerramos el modal
+    };
+
+    // Mostrar el modal de confirmación
+    const renderModal = () => (
+        <div className="modal" style={{ display: showModal ? "block" : "none" }}>
+            <div className="modal-content">
+                <p>¿Estás seguro de que deseas eliminar este contacto?</p>
+                <button onClick={confirmDelete}>Sí, eliminar</button>
+                <button onClick={cancelDelete}>Cancelar</button>
+            </div>
+        </div>
+    );
 
     return (
         <div>
@@ -37,7 +67,7 @@ export const Card = () => {
                                             <i className="fa-regular fa-pen-to-square"></i>
                                         </button>
                                     </Link>
-                                    <button className="btn btn-outline-danger">
+                                    <button className="btn btn-outline-danger" onClick={() => handleDeleteClick(contact.id)}>
                                         <i className="fa-regular fa-trash-can"></i>
                                     </button>
                                 </div>
@@ -48,6 +78,8 @@ export const Card = () => {
             ) : (
                 <p>No hay contactos disponibles.</p>
             )}
+
+            {renderModal()}  {/* Modal de confirmación */}
         </div>
     );
 };

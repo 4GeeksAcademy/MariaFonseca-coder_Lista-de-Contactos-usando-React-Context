@@ -69,6 +69,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al actualizar el contacto:", error);
                 }
             },
+            deleteContact: async (id) => {
+                try {
+                    const res = await fetch(`https://playground.4geeks.com/contact/agendas/MariaFonseca/contacts/${id}`, {
+                        method: "DELETE",  // Usamos DELETE para eliminar el contacto
+                    });
+
+                    if (res.ok) {
+                        // Si la eliminación es exitosa, actualizamos el store
+                        setStore((prevStore) => ({
+                            contacts: prevStore.contacts.filter(contact => contact.id !== id)  // Filtramos el contacto eliminado
+                        }));
+                    } else {
+                        console.error("Error al eliminar el contacto:", res.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar el contacto:", error);
+                }
+            },
         }
     };
 };
