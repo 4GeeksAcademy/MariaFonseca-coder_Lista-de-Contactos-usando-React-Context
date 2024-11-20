@@ -15,7 +15,7 @@ export const Card = () => {
     };
 
     return (
-        <div>
+        <div style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
             {store.contacts.length > 0 ? (
                 store.contacts.map((contact) => (
                     <div className="card mb-1" key={contact.id} style={{ width: "1000px", margin: "auto", position: "relative" }}>
@@ -29,7 +29,7 @@ export const Card = () => {
                                 />
                             </div>
                             <div className="col-md-8">
-                                <div className="card-body">
+                                <div className="card-body text-start">
                                     <h5 className="card-title">{contact.name}</h5>
                                     <p className="card-text">{contact.email}</p>
                                     <p className="card-text">{contact.phone}</p>
@@ -49,11 +49,11 @@ export const Card = () => {
                                         <div className="modal-dialog">
                                             <div className="modal-content">
                                                 <div className="modal-header">
-                                                    <h5 className="modal-title" id="deleteModalLabel">Eliminar Contacto</h5>
+                                                    <h5 className="modal-title" id="deleteModalLabel">Delete Contact</h5>
                                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div className="modal-body">
-                                                    ¿Estás seguro de que deseas eliminar a {contact.name}?
+                                                    Are you sure you want to delete {contact.name}?
                                                 </div>
                                                 <div className="modal-footer">
                                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -62,7 +62,7 @@ export const Card = () => {
                                                         className="btn btn-danger"
                                                         onClick={() => handleDelete(contact.id)}
                                                         data-bs-dismiss="modal">
-                                                        Sí, eliminar
+                                                        Yes, delete
                                                     </button>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@ export const Card = () => {
                     </div>
                 ))
             ) : (
-                <p>No hay contactos disponibles.</p>
+                <p>No hay contactos disponibles, agrega contactos o crea la agenda si no se ha creado</p>
             )}
         </div>
     );

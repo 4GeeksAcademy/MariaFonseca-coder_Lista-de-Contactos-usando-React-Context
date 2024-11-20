@@ -82,7 +82,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al eliminar el contacto:", error);
                 }
             },
+            createAgenda: async () => {
+                try {
+                    const res = await fetch("https://playground.4geeks.com/contact/agendas/MariaFonseca", {
+                        method: "POST",
+                    });
 
+                    if (res.ok) {
+                        console.log("Agenda de MariaFonseca creada con éxito.");
+                        return { created: true };
+                    } else if (res.status === 400) {
+                        console.warn("La agenda ya ha sido creada anteriormente.");
+                        return { created: false };
+                    } else {
+                        console.error("Error al crear la agenda:", res.statusText);
+                        return { created: null };
+                    }
+                } catch (error) {
+                    console.error("Error al crear la agenda:", error);
+                    return { created: null };
+                }
+            },
         }
     };
 };

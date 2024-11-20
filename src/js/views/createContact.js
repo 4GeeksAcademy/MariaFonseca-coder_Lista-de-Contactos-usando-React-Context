@@ -35,7 +35,7 @@ export const CreateContact = () => {
 
     return (
         <div className="container" style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
-            <h2 className="mt-4">Agregar Nuevo Contacto</h2>
+            <h2 className="mt-4">Add New Contact</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-floating mb-3">
                     <input
