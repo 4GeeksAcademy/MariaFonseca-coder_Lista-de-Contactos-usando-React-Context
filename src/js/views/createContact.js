@@ -14,7 +14,7 @@ export const CreateContact = () => {
         address: ""
     });
 
-    const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
+    const [errorMessage, setErrorMessage] = useState(""); //Estado para el mensaje de error
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,14 +27,14 @@ export const CreateContact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validar que no haya campos vacíos
+        //Validar que no haya campos vacíos
         if (!newContact.name.trim() || !newContact.email.trim() || !newContact.phone.trim() || !newContact.address.trim()) {
             setErrorMessage("Please fill in all fields.");
-            return; // No enviar el formulario si algún campo está vacío
+            return; //No enviar el formulario si algún campo está vacío
         }
 
-        // Si todos los campos están completos, enviar el contacto
-        setErrorMessage(""); // Limpiar el mensaje de error
+        //Si todos los campos están completos, enviar el contacto
+        setErrorMessage(""); //Limpiar el mensaje de error
         await actions.postContact(newContact);
         setNewContact({
             name: "",
@@ -49,7 +49,7 @@ export const CreateContact = () => {
         <div className="container" style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
             <h2 className="mt-4">Add New Contact</h2>
 
-            {/* Mostrar mensaje de error si hay campos vacíos */}
+            {/* Error si hay campos vacios: */}
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit}>
