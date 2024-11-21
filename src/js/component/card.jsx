@@ -84,7 +84,9 @@ export const Card = () => {
                     </div>
                 ))
             ) : (
-                <p>No hay contactos disponibles, agrega contactos o crea la agenda si no se ha creado</p>
+                <p>There are no contacts available, add contacts or create the address book if it has not been created <br />
+                    Open the menu  <i class="fa-solid fa-arrow-right"></i>
+                </p>
             )}
         </div>
     );

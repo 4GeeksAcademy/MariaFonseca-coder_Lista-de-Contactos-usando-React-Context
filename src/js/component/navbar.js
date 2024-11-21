@@ -25,9 +25,11 @@ export const Navbar = () => {
 						className="navbar-brand fs-4"
 						style={{ color: "#4d5052", fontFamily: "'Sour Gummy', sans-serif" }}
 					>
+						<i className="fa-regular fa-address-book me-2"></i>
 						Contacts
 					</h1>
 				</Link>
+
 				<button //Botón de Hamburguesa
 					className="navbar-toggler me-3"
 					type="button"
@@ -75,19 +77,23 @@ export const Navbar = () => {
 						</div>
 					</div>
 				</div>
-			</nav>
+			</nav >
 
 			{/* Alerts */}
-			{alertType === "success" && (
-				<div className="alert alert-success mt-2" role="alert">
-					MariaFonseca's agenda has been created successfully!
-				</div>
-			)}
-			{alertType === "primary" && (
-				<div className="alert alert-primary mt-2" role="alert">
-					The agenda has already been created before!
-				</div>
-			)}
+			{
+				alertType === "success" && (
+					<div className="alert alert-success mt-2" role="alert">
+						MariaFonseca's agenda has been created successfully!
+					</div>
+				)
+			}
+			{
+				alertType === "primary" && (
+					<div className="alert alert-primary mt-2" role="alert">
+						The agenda has already been created before!
+					</div>
+				)
+			}
 		</>
 	);
 };
