@@ -19,19 +19,17 @@ export const Navbar = () => {
 
 	return (
 		<>
-			<nav className="navbar navbar-light mb-3" style={{ backgroundColor: "#efd8ff" }}>
+			<nav className="navbar navbar-light mb-3" style={{ backgroundColor: "#c1d8ff" }}>
 				<Link to="/" className="text-decoration-none" style={{ marginLeft: "15px" }}>
 					<h1
 						className="navbar-brand fs-4"
-						style={{ color: "#505050", fontFamily: "'Sour Gummy', sans-serif" }}
+						style={{ color: "#4d5052", fontFamily: "'Sour Gummy', sans-serif" }}
 					>
 						Contacts
 					</h1>
 				</Link>
-
-				{/* Botón hamburguesa */}
-				<button
-					className="navbar-toggler"
+				<button //Botón de Hamburguesa
+					className="navbar-toggler me-3"
 					type="button"
 					data-bs-toggle="offcanvas"
 					data-bs-target="#offcanvasNavbar"
@@ -40,8 +38,7 @@ export const Navbar = () => {
 					<span className="navbar-toggler-icon"></span>
 				</button>
 
-				{/* Offcanvas para el menú hamburguesa */}
-				<div
+				<div //Menú de la Hamburguesa
 					className="offcanvas offcanvas-end"
 					tabIndex="-1"
 					id="offcanvasNavbar"
