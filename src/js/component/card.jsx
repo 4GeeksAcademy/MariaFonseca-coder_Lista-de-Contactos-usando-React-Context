@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
@@ -15,27 +15,32 @@ export const Card = () => {
     };
 
     return (
-        <div style={{ fontFamily: "'Sour Gummy', sans-serif" }}>
+        <div style={{ fontFamily: "'Sour Gummy', sans-serif" }} className="container">
             {store.contacts.length > 0 ? (
                 store.contacts.map((contact) => (
-                    <div className="card mb-1" key={contact.id} style={{ width: "1000px", margin: "auto", position: "relative" }}>
-                        <div className="row">
-                            <div className="col-md-4">
+                    <div className="card mb-3 mx-auto" key={contact.id} style={{ maxWidth: "100%" }}>
+                        <div className="row g-0">
+                            <div className="col-12 col-md-4">
                                 <img
                                     src={`https://picsum.photos/300/188?random=${contact.id}`}
                                     className="img-fluid rounded-start"
                                     alt="Contacto"
-                                    style={{ width: "100%", objectFit: "cover" }}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        borderRadius: "0.5rem 0 0 0.5rem",
+                                    }}
                                 />
                             </div>
-                            <div className="col-md-8">
-                                <div className="card-body text-start">
+                            <div className="col-12 col-md-8 d-flex flex-column">
+                                <div className="card-body text-start flex-grow-1">
                                     <h5 className="card-title">{contact.name}</h5>
                                     <p className="card-text">{contact.email}</p>
                                     <p className="card-text">{contact.phone}</p>
                                     <p className="card-text">{contact.address}</p>
                                 </div>
-                                <div className="position-absolute top-0 end-0 p-3">
+                                <div className="d-flex justify-content-end align-items-center p-2">
                                     <Link to={`/editContact/${contact.id}`} className="btn btn-outline-primary me-2">
                                         <i className="fa-regular fa-pen-to-square"></i>
                                     </Link>
@@ -45,28 +50,33 @@ export const Card = () => {
                                         data-bs-target={`#deleteModal${contact.id}`}>
                                         <i className="fa-regular fa-trash-can"></i>
                                     </button>
-                                    <div className="modal fade" id={`deleteModal${contact.id}`} tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                        <div className="modal-dialog">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5 className="modal-title" id="deleteModalLabel">Delete Contact</h5>
-                                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div className="modal-body">
-                                                    Are you sure you want to delete {contact.name}?
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        onClick={() => handleDelete(contact.id)}
-                                                        data-bs-dismiss="modal">
-                                                        Yes, delete
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="modal fade"
+                            id={`deleteModal${contact.id}`}
+                            tabIndex="-1"
+                            aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="deleteModalLabel">Delete Contact</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        Are you sure you want to delete {contact.name}?
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-danger"
+                                            onClick={() => handleDelete(contact.id)}
+                                            data-bs-dismiss="modal">
+                                            Yes, delete
+                                        </button>
                                     </div>
                                 </div>
                             </div>
